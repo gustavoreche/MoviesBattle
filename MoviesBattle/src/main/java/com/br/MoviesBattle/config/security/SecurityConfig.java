@@ -31,7 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			        .deleteCookies()
 			        )
 			.csrf().disable()
-			.authorizeRequests().antMatchers("/match/start").authenticated();
+			.authorizeRequests().antMatchers("/match/start").authenticated()
+			.and()
+			.authorizeRequests().antMatchers("/movie/top-movies").authenticated();
 	}
 
 	@Override
