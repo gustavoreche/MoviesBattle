@@ -20,7 +20,7 @@ import org.springframework.http.ResponseEntity;
 public class LoginAndLogoutTest {
 	
 	@LocalServerPort
-	private int port = 8080;
+	private int port;
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -28,7 +28,7 @@ public class LoginAndLogoutTest {
 	@Test
 	public void loginOneTimeAndKeepLogin() throws Exception {
 		ResponseEntity<String> responseOfRequest = executeStartRequestWithAutentication();
-		Assertions.assertTrue(responseOfRequest.getStatusCode() == HttpStatus.OK);
+		Assertions.assertEquals(HttpStatus.OK, responseOfRequest.getStatusCode());
 		Assertions.assertTrue(responseOfRequest.getBody().equals("Start match"));
 		
 		List<String> cookieHeader = responseOfRequest.getHeaders().get("Set-Cookie");
@@ -36,7 +36,7 @@ public class LoginAndLogoutTest {
 		final HttpHeaders headersSecondRequest = new HttpHeaders();
 		headersSecondRequest.addAll("Cookie", cookieHeader);
 		ResponseEntity<String> responseOfSecondRequest = executeRequest(headersSecondRequest, "/start");
-		Assertions.assertTrue(responseOfSecondRequest.getStatusCode() == HttpStatus.OK);
+		Assertions.assertEquals(HttpStatus.OK, responseOfSecondRequest.getStatusCode());
 		Assertions.assertTrue(responseOfSecondRequest.getBody().equals("Start match"));
 	}
 	
@@ -59,7 +59,7 @@ public class LoginAndLogoutTest {
 	@Test
 	public void loginAndLogout() throws Exception {
 		ResponseEntity<String> responseOfRequest = executeStartRequestWithAutentication();
-		Assertions.assertTrue(responseOfRequest.getStatusCode() == HttpStatus.OK);
+		Assertions.assertEquals(HttpStatus.OK, responseOfRequest.getStatusCode());
 		Assertions.assertTrue(responseOfRequest.getBody().equals("Start match"));
 		
 		final HttpHeaders headersFinishRequest = new HttpHeaders();
@@ -67,7 +67,7 @@ public class LoginAndLogoutTest {
 
 		final HttpHeaders headersSecondRequest = new HttpHeaders();
 		ResponseEntity<String> responseOfSecondRequest = executeRequest(headersSecondRequest, "/start");
-		Assertions.assertTrue(responseOfSecondRequest.getStatusCode() == HttpStatus.UNAUTHORIZED);
+		Assertions.assertEquals(HttpStatus.UNAUTHORIZED, responseOfSecondRequest.getStatusCode());
 		
 	}
 	

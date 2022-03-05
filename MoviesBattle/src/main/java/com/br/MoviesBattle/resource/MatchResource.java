@@ -14,8 +14,7 @@ public class MatchResource {
 	}
 	
 	@GetMapping("/finish")
-	public String finish() {
-		return "Finish match";
+	public void finish() {
 	}
 
 }
