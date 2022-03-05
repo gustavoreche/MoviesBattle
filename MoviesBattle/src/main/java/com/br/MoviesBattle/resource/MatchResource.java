@@ -12,5 +12,10 @@ public class MatchResource {
 	public String start() {
 		return "Start match";
 	}
+	
+	@GetMapping("/finish")
+	public String finish() {
+		return "Finish match";
+	}
 
 }

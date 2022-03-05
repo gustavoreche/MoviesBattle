@@ -24,15 +24,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.httpBasic()
 			.authenticationEntryPoint(basicAuthentication)
 			.and()
-			.authorizeRequests()
-			.antMatchers("/h2-console/**").permitAll()
-			.anyRequest().authenticated();
+			.logout(logout -> logout
+					.logoutUrl("/match/finish")
+					.logoutSuccessUrl("/match/start")
+			        .invalidateHttpSession(true)                                        
+			        .deleteCookies()
+			        )
+			.csrf().disable()
+			.authorizeRequests().antMatchers("/match/start").authenticated();
 	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()
-		.withUser("user1").password(passwordEncoder().encode("user1Pass"))
+		.withUser("gustavo").password(passwordEncoder().encode("123456"))
 		.authorities("ROLE_USER");
 	}
 	
