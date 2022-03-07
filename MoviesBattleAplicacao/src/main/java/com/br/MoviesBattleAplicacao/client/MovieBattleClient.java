@@ -20,7 +20,8 @@ public interface MovieBattleClient {
 	ResponseEntity<String> login(@RequestHeader("Authorization") String header);
 	
 	@GetMapping("movie/two-movies")
-	ResponseEntity<ImdbTwoMoviesResponse> getTwoMovies(@RequestHeader("Authorization") HttpHeaders header);
+	ResponseEntity<ImdbTwoMoviesResponse> getTwoMovies(@RequestHeader("Authorization") HttpHeaders header,
+			@RequestParam("idGame") String idGame);
 	
 	@GetMapping("movie/two-movies/result")
 	ResponseEntity<UserDTO> getTwoMoviesResult(@RequestHeader("Authorization") HttpHeaders header, 

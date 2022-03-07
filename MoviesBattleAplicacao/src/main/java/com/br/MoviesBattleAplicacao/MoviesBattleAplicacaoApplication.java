@@ -96,8 +96,9 @@ public class MoviesBattleAplicacaoApplication implements CommandLineRunner {
 		}
 		
 		UserDTO userInformation = new UserDTO(false);
+		String idGame = "";
 		while(!userInformation.getUserLost()) {
-			ImdbTwoMoviesResponse movies = this.movieBattleService.getTwoMovies(authorizationSuccess);
+			ImdbTwoMoviesResponse movies = this.movieBattleService.getTwoMovies(authorizationSuccess, idGame);
 			ImdbMovieDTO movie1 = movies.getMovie1();
 			ImdbMovieDTO movie2 = movies.getMovie2();
 			boolean chosenMovie = false;
@@ -121,7 +122,8 @@ public class MoviesBattleAplicacaoApplication implements CommandLineRunner {
 					chosenMovie = false;
 				}
 				if(chosenMovie) {
-					userInformation = this.movieBattleService.getTwoMoviesResult(authorizationSuccess, movies, movieSelected, loginInfo.getIdGame());
+					idGame = loginInfo.getIdGame();
+					userInformation = this.movieBattleService.getTwoMoviesResult(authorizationSuccess, movies, movieSelected, idGame);
 					showResult(userInformation);					
 				}
 			}

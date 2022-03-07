@@ -22,8 +22,8 @@ public class MovieResource {
 	}
 	
 	@GetMapping(MOVIE_TWO_MOVIES)
-	public ImdbTwoMoviesResponse getTwoMovies() {
-		return this.imdbService.getTwoMovies();
+	public ImdbTwoMoviesResponse getTwoMovies(@RequestParam("idGame") String idGame) {
+		return this.imdbService.getTwoMovies(idGame);
 	}
 	
 	@GetMapping(MOVIE_TWO_MOVIES_RESULT)

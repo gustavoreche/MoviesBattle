@@ -49,8 +49,8 @@ public class MovieBattleService {
 		}
 	}
 	
-	public ImdbTwoMoviesResponse getTwoMovies(HttpHeaders authorizationSuccess) throws InterruptedException {
-		return this.movieBattleClient.getTwoMovies(authorizationSuccess).getBody();	
+	public ImdbTwoMoviesResponse getTwoMovies(HttpHeaders authorizationSuccess, String idGame) throws InterruptedException {
+		return this.movieBattleClient.getTwoMovies(authorizationSuccess, idGame).getBody();	
 	}
 
 	public UserDTO getTwoMoviesResult(HttpHeaders authorizationSuccess, 

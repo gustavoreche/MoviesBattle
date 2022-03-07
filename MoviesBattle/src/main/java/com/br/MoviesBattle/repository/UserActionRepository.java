@@ -10,6 +10,8 @@ import com.br.MoviesBattle.model.database.UserAction;
 
 public interface UserActionRepository extends CrudRepository<UserAction, Integer> {
 	
+	List<UserAction> findByIdGame(String idGame);
+	
 	@Query(value = "SELECT SUM(wrong_choice) FROM tb_user_action WHERE id_game = :idGame", 
 			nativeQuery = true)
 	Integer countWrongChoice(String idGame);
