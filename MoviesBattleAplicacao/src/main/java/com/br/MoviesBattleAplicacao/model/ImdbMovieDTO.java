@@ -1,6 +1,4 @@
-package com.br.MoviesBattle.model.imdb;
-
-import java.beans.Transient;
+package com.br.MoviesBattleAplicacao.model;
 
 public class ImdbMovieDTO {
 
@@ -50,9 +48,4 @@ public class ImdbMovieDTO {
 		return imDbRatingCount;
 	}
 	
-	@Transient
-	public Double getPontuation() {
-		return this.imDbRating * this.imDbRatingCount;
-	}
-
 }

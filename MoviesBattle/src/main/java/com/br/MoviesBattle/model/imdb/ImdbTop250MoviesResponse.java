@@ -9,5 +9,13 @@ public class ImdbTop250MoviesResponse {
 	public List<ImdbMovieDTO> getItems() {
 		return items;
 	}
+	
+	public ImdbMovieDTO getMovieById(String idMovie) {
+		return this.items
+			.stream()
+			.filter(movie -> movie.getId().equalsIgnoreCase(idMovie))
+			.findFirst()
+			.orElseGet(() -> new ImdbMovieDTO());
+	}
 
 }

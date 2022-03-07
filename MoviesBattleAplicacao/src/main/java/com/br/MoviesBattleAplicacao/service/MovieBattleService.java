@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 
 import com.br.MoviesBattleAplicacao.client.MovieBattleClient;
+import com.br.MoviesBattleAplicacao.model.ImdbMovieDTO;
+import com.br.MoviesBattleAplicacao.model.ImdbTwoMoviesResponse;
+import com.br.MoviesBattleAplicacao.model.login.LoginDTO;
+import com.br.MoviesBattleAplicacao.model.user.RankingDTO;
+import com.br.MoviesBattleAplicacao.model.user.UserDTO;
 
 import feign.FeignException;
 
@@ -21,7 +26,7 @@ public class MovieBattleService {
 		this.movieBattleClient = movieBattleClient;
 	}
 	
-	public HttpHeaders login(String user, String password) throws InterruptedException {
+	public LoginDTO login(String user, String password) throws InterruptedException {
 		try {
 			byte[] basicAuth = Base64Utils.encode((user + ":" + password).getBytes());
 	        String authHeader = "Basic " + new String(basicAuth);
@@ -32,7 +37,7 @@ public class MovieBattleService {
 			authorizationSuccess.addAll("Cookie", cookieHeader);
 			System.err.println("LOGADO com SUCESSO");
 			Thread.sleep(200);
-			return authorizationSuccess;
+			return new LoginDTO(authorizationSuccess, login.getBody());
 		} catch (FeignException clientError) {
 			if (clientError.status() == HttpStatus.UNAUTHORIZED.value()) {
 				System.err.println("ERRO!!!! Usuario OU Senha incorretos!!");
@@ -40,13 +45,32 @@ public class MovieBattleService {
 				System.err.println("----------------------------------------------");
 				Thread.sleep(200);
 			}
-			return null;
+			return new LoginDTO();
 		}
 	}
 	
-	public HttpHeaders get250Movies(HttpHeaders authorizationSuccess) throws InterruptedException {
-		ResponseEntity<String> movies = this.movieBattleClient.get250Movies(authorizationSuccess);	
-		return authorizationSuccess;
+	public ImdbTwoMoviesResponse getTwoMovies(HttpHeaders authorizationSuccess) throws InterruptedException {
+		return this.movieBattleClient.getTwoMovies(authorizationSuccess).getBody();	
+	}
+
+	public UserDTO getTwoMoviesResult(HttpHeaders authorizationSuccess, 
+			ImdbTwoMoviesResponse movies,
+			ImdbMovieDTO movieSelected,
+			String idGame) {
+		return this.movieBattleClient.getTwoMoviesResult(authorizationSuccess, 
+				movies.getMovie1().getId(),
+				movies.getMovie2().getId(),
+				movieSelected.getId(),
+				idGame)
+			.getBody();
+	}
+	
+	public void logout(HttpHeaders authorizationSuccess) {
+		this.movieBattleClient.logout(authorizationSuccess);
+	}
+
+	public List<RankingDTO> getRanking(HttpHeaders authorizationSuccess) {
+		return this.movieBattleClient.getRanking(authorizationSuccess);
 	}
 
 }
