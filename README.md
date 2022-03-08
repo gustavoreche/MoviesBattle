@@ -10,3 +10,4 @@ API REST para uma aplicação onde serão informados dois filmes e o jogador dev
   - User: teste. Senha: 123456
 
 ## Cobertura de testes:
+<img src="https://github.com/gustavoreche/MoviesBattle/blob/master/imagens/coberturaTeste.PNG">
