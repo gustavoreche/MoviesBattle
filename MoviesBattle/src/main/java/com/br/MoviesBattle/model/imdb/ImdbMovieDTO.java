@@ -4,6 +4,22 @@ import java.beans.Transient;
 
 public class ImdbMovieDTO {
 
+	public ImdbMovieDTO() {
+	}
+
+	public ImdbMovieDTO(String id, Integer rank, String title, String fullTitle, Integer year, String image,
+			String crew, Double imDbRating, Long imDbRatingCount) {
+		this.id = id;
+		this.rank = rank;
+		this.title = title;
+		this.fullTitle = fullTitle;
+		this.year = year;
+		this.image = image;
+		this.crew = crew;
+		this.imDbRating = imDbRating;
+		this.imDbRatingCount = imDbRatingCount;
+	}
+
 	private String id;
 	private Integer rank;
 	private String title;
@@ -49,7 +65,7 @@ public class ImdbMovieDTO {
 	public Long getImDbRatingCount() {
 		return imDbRatingCount;
 	}
-	
+
 	@Transient
 	public Double getPontuation() {
 		return this.imDbRating * this.imDbRatingCount;

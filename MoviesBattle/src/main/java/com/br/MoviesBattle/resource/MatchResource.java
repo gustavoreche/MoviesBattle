@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.MoviesBattle.model.user.RankingDTO;
@@ -22,12 +23,12 @@ public class MatchResource {
 		this.matchService = matchService;
 	}
 
-	@GetMapping(MATCH_START)
+	@PostMapping(MATCH_START)
 	public String start() {
 		return UUID.randomUUID().toString();
 	}
 	
-	@GetMapping(MATCH_FINISH)
+	@PostMapping(MATCH_FINISH)
 	public void finish() {
 	}
 	

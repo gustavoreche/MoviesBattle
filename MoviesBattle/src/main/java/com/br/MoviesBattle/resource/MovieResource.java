@@ -19,6 +19,7 @@ public class MovieResource {
 	
 	public MovieResource(ImdbService imdbService) {
 		this.imdbService = imdbService;
+		this.imdbService.setMovies();
 	}
 	
 	@GetMapping(MOVIE_TWO_MOVIES)

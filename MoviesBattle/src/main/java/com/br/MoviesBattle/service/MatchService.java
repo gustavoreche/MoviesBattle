@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.br.MoviesBattle.model.database.Ranking;
+import com.br.MoviesBattle.model.database.RankingProjection;
 import com.br.MoviesBattle.model.user.RankingDTO;
 import com.br.MoviesBattle.repository.UserActionRepository;
 
@@ -25,7 +25,7 @@ public class MatchService {
 			.collect(Collectors.toList());
 	}
 	
-	private Double getPontuation(Ranking ranking) {
+	private Double getPontuation(RankingProjection ranking) {
 		return (Double.valueOf(ranking.getCorrect()) * 100) / ranking.getQuiz();
 	}
 

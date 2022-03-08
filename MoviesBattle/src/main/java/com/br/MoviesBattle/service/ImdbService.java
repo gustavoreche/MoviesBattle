@@ -26,6 +26,9 @@ public class ImdbService {
 			UserActionRepository userActionRepository) {
 		this.imdbClient = imdbClient;
 		this.userActionRepository = userActionRepository;
+	}
+	
+	public void setMovies() {
 		this.movies = this.imdbClient.get250Movies();
 	}
 	
@@ -35,7 +38,7 @@ public class ImdbService {
 		ImdbMovieDTO movie1 = this.movies.getItems().get(new Random().nextInt(249));
 		ImdbMovieDTO movie2 = this.movies.getItems().get(new Random().nextInt(249));
 		while(movie1.getId() == movie2.getId() 
-				|| movie1.getPontuation() == movie2.getPontuation()
+				|| movie1.getPontuation().doubleValue() == movie2.getPontuation().doubleValue()
 				|| isSequenceWithSameMovie(movies, movie1.getId(), movie2.getId())) {
 			movie2 = this.movies.getItems().get(new Random().nextInt(249));
 		}
@@ -59,8 +62,9 @@ public class ImdbService {
 			});
 	}
 
-	public UserDTO getTwoMoviesResult(String idMovie1, String idMovie2, String idMovieSelected,
-			String idGame, Authentication authentication) {
+	public UserDTO getTwoMoviesResult(String idMovie1, String idMovie2, 
+			String idMovieSelected, String idGame, 
+			Authentication authentication) {
 		ImdbMovieDTO movie1 = this.movies.getMovieById(idMovie1);
 		ImdbMovieDTO movie2 = this.movies.getMovieById(idMovie2);
 		ImdbMovieDTO bestMovie = movie1.getPontuation() > movie2.getPontuation() 

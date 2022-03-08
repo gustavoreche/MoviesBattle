@@ -3,6 +3,13 @@ package com.br.MoviesBattle.model.imdb;
 import java.util.List;
 
 public class ImdbTop250MoviesResponse {
+	
+	public ImdbTop250MoviesResponse() {
+	}
+	
+	public ImdbTop250MoviesResponse(List<ImdbMovieDTO> items) {
+		this.items = items;
+	}
 
 	private List<ImdbMovieDTO> items;
 

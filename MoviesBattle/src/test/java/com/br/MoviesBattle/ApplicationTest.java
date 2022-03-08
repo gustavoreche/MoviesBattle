@@ -1,4 +1,4 @@
-package com.br.MoviesBattle.service;
+package com.br.MoviesBattle;
 
 import java.util.List;
 
@@ -16,8 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import com.br.MoviesBattle.resource.MovieResource;
+
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class ImdbTest {
+public class ApplicationTest {
 	
 	@LocalServerPort
 	private int port;
@@ -29,7 +31,6 @@ public class ImdbTest {
 	public void loginOneTimeAndKeepLogin() throws Exception {
 		ResponseEntity<String> responseOfRequest = executeStartRequestWithAutentication();
 		Assertions.assertEquals(HttpStatus.OK, responseOfRequest.getStatusCode());
-		Assertions.assertTrue(responseOfRequest.getBody().equals("Start match"));
 		
 		List<String> cookieHeader = responseOfRequest.getHeaders().get("Set-Cookie");
 		
@@ -37,7 +38,6 @@ public class ImdbTest {
 		headersSecondRequest.addAll("Cookie", cookieHeader);
 		ResponseEntity<String> responseOfSecondRequest = executeMatchRequest(headersSecondRequest, "/start");
 		Assertions.assertEquals(HttpStatus.OK, responseOfSecondRequest.getStatusCode());
-		Assertions.assertTrue(responseOfSecondRequest.getBody().equals("Start match"));
 	}
 	
 	private ResponseEntity<String> executeStartRequestWithAutentication() {
@@ -51,7 +51,7 @@ public class ImdbTest {
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
 		return this.restTemplate
 				.exchange("http://localhost:" + port + "/match" + path,
-						HttpMethod.GET,
+						HttpMethod.POST,
 						entity,
 						String.class);
 	}
@@ -60,7 +60,6 @@ public class ImdbTest {
 	public void loginAndLogout() throws Exception {
 		ResponseEntity<String> responseOfRequest = executeStartRequestWithAutentication();
 		Assertions.assertEquals(HttpStatus.OK, responseOfRequest.getStatusCode());
-		Assertions.assertTrue(responseOfRequest.getBody().equals("Start match"));
 		
 		final HttpHeaders headersFinishRequest = new HttpHeaders();
 		executeMatchRequest(headersFinishRequest, "/finish");
@@ -71,7 +70,7 @@ public class ImdbTest {
 	}
 	
 	@Test
-	public void get250MoviesWithoutAuthorization() throws Exception {
+	public void getTwoMoviesWithoutAuthorization() throws Exception {
 		final HttpHeaders headers = new HttpHeaders();
 		ResponseEntity<String> responseOfRequest = executeMovieRequest(headers);
 		Assertions.assertEquals(HttpStatus.UNAUTHORIZED, responseOfRequest.getStatusCode());
@@ -81,17 +80,16 @@ public class ImdbTest {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
 		return this.restTemplate
-				.exchange("http://localhost:" + port + "/movie/top-movies",
+				.exchange("http://localhost:" + port + MovieResource.MOVIE_TWO_MOVIES,
 						HttpMethod.GET,
 						entity,
 						String.class);
 	}
 	
 	@Test
-	public void get250MoviesWithAuthorization() throws Exception {
+	public void getTwoMoviesWithAuthorization() throws Exception {
 		ResponseEntity<String> responseOfRequest = executeStartRequestWithAutentication();
 		Assertions.assertEquals(HttpStatus.OK, responseOfRequest.getStatusCode());
-		Assertions.assertTrue(responseOfRequest.getBody().equals("Start match"));
 		
 		List<String> cookieHeader = responseOfRequest.getHeaders().get("Set-Cookie");
 		

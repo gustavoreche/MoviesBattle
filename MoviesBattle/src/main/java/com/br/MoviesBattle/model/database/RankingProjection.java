@@ -1,6 +1,6 @@
 package com.br.MoviesBattle.model.database;
 
-public interface Ranking {
+public interface RankingProjection {
 
 	public String getUser();
 	public Integer getQuiz();
