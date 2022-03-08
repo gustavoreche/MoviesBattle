@@ -8,6 +8,9 @@ public class UserDTO {
 	private Integer wrongChoice;
 	private Boolean userLost;
 	
+	public UserDTO() {
+	}
+	
 	public UserDTO(UserAction userAction) {
 		this.point = userAction.getPoint();
 		this.wrongChoice = userAction.getWrongChoice();
